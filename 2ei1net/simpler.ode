@@ -1,0 +1,36 @@
+# Aug 15, 2013
+# Local model with one excitatory, one fast inhibitory populations.
+# "Reduced" model.
+
+# nonlinearity
+f(x)=a*sqrt((x-c)/(1-exp(-b*(x-c))))
+
+# fast synapses of excitatory populations
+sea'=(-sea+f(gne*sna-gie*sif-thre))/taue
+sif'=(-sif+f(gni*sna+snb-gii*sif-thri))/taui
+
+# slow synapses of excitatory population
+sna'=(-sna+an*sea*(1-sna))/taun
+snb'=(-snb+an*seb*(1-snb))/taun
+
+# define ratios
+!gne=rne_e*gee
+!gni=rne_i*gei
+
+# parameters
+par gee=20,rne_e=.75
+par gei=10,rne_i=.5
+par gie=30,gii=5
+par p=0.9
+par an=1
+par thre=5,thri=5
+par taue=2,taun=80,taui=4
+par a=1,b=20,c=0
+
+aux df=sna-snb
+
+@ meth=euler,total=1000,dt=0.1,bound=1000000000
+@ xp=t,yp=sea,xlo=0,ylo=-1,xhi=1000,yhi=20,nplot=5,yp2=seb,yp3=sif,yp4=sna,yp5=snb
+
+done
+

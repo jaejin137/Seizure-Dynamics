@@ -1,0 +1,221 @@
+# Nov. 7, 2013
+# A local network model compsoed of 5 excitatory, one fast and one slow inhibitory populations.
+# Each excitatory population has a fast and a slow synapses.
+
+# nonlinearity
+f(x)=a*sqrt((x-c)/(1-exp(-b*(x-c))))
+
+# delayed self-inputs of e within a network
+dsea=delay(sea,taud)
+dseb=delay(seb,taud)
+dsec=delay(sec,taud)
+dsed=delay(sed,taud)
+dsee=delay(see,taud)
+# delayed self-inputs of e within a network
+dsna=delay(sna,taud)
+dsnb=delay(snb,taud)
+dsnc=delay(snc,taud)
+dsnd=delay(snd,taud)
+dsne=delay(sne,taud)
+# delayed sum of inputs from one e to another
+dsesum_a=(delay(seb,taud)+delay(sec,taud)+delay(sed,taud)+delay(see,taud))/4
+dsnsum_a=(delay(snb,taud)+delay(snc,taud)+delay(snd,taud)+delay(sne,taud))/4
+dsesum_b=(delay(sea,taud)+delay(sec,taud)+delay(sed,taud)+delay(see,taud))/4
+dsnsum_b=(delay(sna,taud)+delay(snc,taud)+delay(snd,taud)+delay(sne,taud))/4
+dsesum_c=(delay(sea,taud)+delay(seb,taud)+delay(sed,taud)+delay(see,taud))/4
+dsnsum_c=(delay(sna,taud)+delay(snb,taud)+delay(snd,taud)+delay(sne,taud))/4
+dsesum_d=(delay(sea,taud)+delay(seb,taud)+delay(sec,taud)+delay(see,taud))/4
+dsnsum_d=(delay(sna,taud)+delay(snb,taud)+delay(snc,taud)+delay(sne,taud))/4
+dsesum_e=(delay(sea,taud)+delay(seb,taud)+delay(sec,taud)+delay(sed,taud))/4
+dsnsum_e=(delay(sna,taud)+delay(snb,taud)+delay(snc,taud)+delay(snd,taud))/4
+# delayed sum of inputs from e to i
+dsesum_i=(delay(sea,taud)+delay(seb,taud)+delay(sec,taud)+delay(sed,taud)+delay(see,taud))/5
+dsnsum_i=(delay(sna,taud)+delay(snb,taud)+delay(snc,taud)+delay(snd,taud)+delay(sne,taud))/5
+
+# delayed input from i to e within a network
+dsif_e=delay(sif,taud)
+# delayed input from i to i within a network
+dsif_i=delay(sif,taud)
+
+
+# fast synapses of excitatory populations
+sea'=(-sea+f(gee*(p*dsea+(1-p)*dsesum_a)+gne*(p*dsna+(1-p)*dsnsum_a)-gie*dsif_e-thre-epsa+sige*wa*h(t)+stima(t)))/taua
+seb'=(-seb+f(gee*(p*dseb+(1-p)*dsesum_b)+gne*(p*dsnb+(1-p)*dsnsum_b)-gie*dsif_e-thre-epsb+sige*wb*h(t)+stimb(t)))/taua
+sec'=(-sec+f(gee*(p*dsec+(1-p)*dsesum_c)+gne*(p*dsnc+(1-p)*dsnsum_c)-gie*dsif_e-thre-epsc+sige*wc*h(t)+stimc(t)))/taua
+sed'=(-sed+f(gee*(p*dsed+(1-p)*dsesum_d)+gne*(p*dsnd+(1-p)*dsnsum_d)-gie*dsif_e-thre-epsd+sige*wd*h(t)+stimd(t)))/taua
+see'=(-see+f(gee*(p*dsee+(1-p)*dsesum_e)+gne*(p*dsne+(1-p)*dsnsum_e)-gie*dsif_e-thre-epse+sige*we*h(t)+stime(t)))/taua
+
+# fast inhibitory synapses
+sif'=(-sif+f(gei*dsesum_i+gni*dsnsum_i-gii*dsif_i-thri+sigi*wi*h(t)+stimi(t)))/taui
+
+# slow synapses of excitatory
+sna'=(-sna+an*sea*(1-sna))/taun
+snb'=(-snb+an*seb*(1-snb))/taun
+snc'=(-snc+an*sec*(1-snc))/taun
+snd'=(-snd+an*sed*(1-snd))/taun
+sne'=(-sne+an*see*(1-sne))/taun
+
+# random noises
+wiener wa
+wiener wb
+wiener wc
+wiener wd
+wiener we
+wiener wi
+
+# auxiliary function definitions
+h(t) = heav(t-t_nson)*heav(t_nsoff-t)
+
+# various stimuli on a, b, c, d, e, and i of each network
+stima(t)=st1a(t)+st2a(t)+st3a(t)+st4a(t)+st5a(t)
+stimb(t)=st1b(t)+st2b(t)+st3b(t)+st4b(t)+st5b(t)
+stimc(t)=st1c(t)+st2c(t)+st3c(t)+st4c(t)+st5c(t)
+stimd(t)=st1d(t)+st2d(t)+st3d(t)+st4d(t)+st5d(t)
+stime(t)=st1e(t)+st2e(t)+st3e(t)+st4e(t)+st5e(t)
+stimi(t)=st1i(t)+st2i(t)+st3i(t)+st4i(t)+st5i(t)
+
+# stimulus 1
+st1a(t)=.5*amp1a*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+st1b(t)=.5*amp1b*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+st1c(t)=.5*amp1c*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+st1d(t)=.5*amp1d*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+st1e(t)=.5*amp1e*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+st1i(t)=.5*amp1i*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+
+# stimulus 2
+st2a(t)=.5*amp2a*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+st2b(t)=.5*amp2b*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+st2c(t)=.5*amp2c*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+st2d(t)=.5*amp2d*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+st2e(t)=.5*amp2e*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+st2i(t)=.5*amp2i*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+
+# stimulus 3
+st3a(t)=.5*amp3a*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+st3b(t)=.5*amp3b*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+st3c(t)=.5*amp3c*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+st3d(t)=.5*amp3d*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+st3e(t)=.5*amp3e*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+st3i(t)=.5*amp3i*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+
+# stimulus 4
+st4a(t)=.5*amp4a*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+st4b(t)=.5*amp4b*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+st4c(t)=.5*amp4c*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+st4d(t)=.5*amp4d*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+st4e(t)=.5*amp4e*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+st4i(t)=.5*amp4i*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+
+# stimulus 5
+st5a(t)=.5*amp5a*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+st5b(t)=.5*amp5b*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+st5c(t)=.5*amp5c*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+st5d(t)=.5*amp5d*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+st5e(t)=.5*amp5e*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+st5i(t)=.5*amp5i*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+
+# define ratios
+!gne=rne_e*gee
+!gni=rne_i*gei
+
+# parameters
+par gee=20,rne_e=.75
+par gei=10,rne_i=.5
+par gie=20,gii=5
+par p=0.9
+par taud=3
+par taua=2,taun=80,taui=4
+par an=1
+
+# thresholds of each populations
+par thre=5,thri=5
+# heterogeneity for e populations
+par epsa=0.,epsb=0.01,epsc=0.02,epsd=0.03,epse=0.04
+
+# noises
+par sige=0,sigi=0
+par t_nson=0,t_nsoff=100000
+
+# constants for nonlinearity
+par a=1,b=50,c=0
+
+# input parameters
+!amp1i=itoe1*(amp1a+amp1b+amp1c+amp1d+amp1e)/5
+!amp2i=itoe2*(amp2a+amp2b+amp2c+amp2d+amp2e)/5
+!amp3i=itoe3*(amp3a+amp3b+amp3c+amp3d+amp3e)/5
+!amp4i=itoe4*(amp4a+amp4b+amp4c+amp4d+amp4e)/5
+!amp5i=itoe5*(amp5a+amp5b+amp5c+amp5d+amp5e)/5
+
+par nu1=0,nu2=0,nu3=0,nu4=0,nu5=0
+par itoe1=0.25,itoe2=0.25,itoe3=0.25,itoe4=0.25,itoe5=0.25
+par amp1a=0,amp1b=0,amp1c=0,amp1d=0,amp1e=0
+par amp2a=0,amp2b=0,amp2c=0,amp2d=0,amp2e=0
+par amp3a=0,amp3b=0,amp3c=0,amp3d=0,amp3e=0
+par amp4a=0,amp4b=0,amp4c=0,amp4d=0,amp4e=0
+par amp5a=0,amp5b=0,amp5c=0,amp5d=0,amp5e=0
+par ton1=100,ton2=1000,ton3=2000,ton4=3000,ton5=4000
+par dur1=100,dur2=100,dur3=100,dur4=100,dur5=100
+
+aux stima=stima(t)
+aux stimb=stimb(t)
+aux stimc=stimc(t)
+aux stimd=stimd(t)
+aux stime=stime(t)
+aux stim=(stima(t)+stimb(t)+stimc(t)+stimd(t)+stime(t))/5
+
+aux p=p
+aux gee=gee
+aux rne_e=rne_e
+aux gei=gei
+aux rne_i=rne_i
+aux gie=gie
+aux freq_1=nu1
+aux freq_2=nu2
+aux freq_3=nu3
+aux freq_4=nu4
+aux freq_5=nu5
+aux itoe_1=itoe1
+aux itoe_2=itoe2
+aux itoe_3=itoe3
+aux itoe_4=itoe4
+aux itoe_5=itoe5
+aux amp_1a=amp1a
+aux amp_1b=amp1b
+aux amp_1c=amp1c
+aux amp_1d=amp1d
+aux amp_1e=amp1e
+aux amp_2a=amp2a
+aux amp_2b=amp2b
+aux amp_2c=amp2c
+aux amp_2d=amp2d
+aux amp_2e=amp2e
+aux amp_3a=amp3a
+aux amp_3b=amp3b
+aux amp_3c=amp3c
+aux amp_3d=amp3d
+aux amp_3e=amp3e
+aux amp_4a=amp4a
+aux amp_4b=amp4b
+aux amp_4c=amp4c
+aux amp_4d=amp4d
+aux amp_4e=amp4e
+aux amp_5a=amp5a
+aux amp_5b=amp5b
+aux amp_5c=amp5c
+aux amp_5d=amp5d
+aux amp_5e=amp5e
+aux dur_1=dur1
+aux dur_2=dur2
+aux dur_3=dur3
+aux dur_4=dur4
+aux dur_5=dur5
+aux tau_a=taua
+aux tau_n=taun
+aux tau_i=taui
+aux tau_d=taud
+
+@ meth=euler,total=1000,dt=0.1,bound=1000000000,delay=100
+@ xp=t,yp=sea,xlo=0,ylo=-1,xhi=1000,yhi=20,nplot=8,yp2=seb,yp3=seb,yp4=sec,yp5=sed,yp6=see,yp7=sif,yp8=stim
+
+done
+

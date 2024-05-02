@@ -1,0 +1,50 @@
+# nonlinearity
+f(x)=a*sqrt((x-c)/(1-exp(-b*(x-c))))
+
+par amp=0
+# fast synapses of excitatory populations
+sea1'=per*(-sea1+f(gee*(p*sea1+(1-p)*seb1)+gne*(p*sna1+(1-p)*snb1)-gie*sif1-thre))/taue
+seb1'=per*(-seb1+f(gee*(p*seb1+(1-p)*sea1)+gne*(p*snb1+(1-p)*sna1)-gie*sif1-thre))/taue
+sif1'=per*(-sif1+f(gei*(sea1+seb1)/2+gni*(sna1+snb1)/2-gii*sif1-thri))/taui
+sna1'=per*(-sna1+an*sea1*(1-sna1))/taun
+snb1'=per*(-snb1+an*seb1*(1-snb1))/taun
+
+sea1'=per*(-sea1+f(gee*(p*sea1+(1-p)*seb1)+gne*(p*sna1+(1-p)*snb1)-gie*sif1-thre))/taue
+seb1'=per*(-seb1+f(gee*(p*seb1+(1-p)*sea1)+gne*(p*snb1+(1-p)*sna1)-gie*sif1-thre+amp))/taue
+sif1'=per*(-sif1+f(gei*(sea1+seb1)/2+gni*(sna1+snb1)/2-gii*sif1-thri))/taui
+sna1'=per*(-sna1+an*sea1*(1-sna1))/taun
+snb1'=per*(-snb1+an*seb1*(1-snb1))/taun
+
+sea1'=per*(-sea1+f(gee*(p*sea1+(1-p)*seb1)+gne*(p*sna1+(1-p)*snb1)-gie*sif1-thre))/taue
+seb1'=per*(-seb1+f(gee*(p*seb1+(1-p)*sea1)+gne*(p*snb1+(1-p)*sna1)-gie*sif1-thre))/taue
+sif1'=per*(-sif1+f(gei*(sea1+seb1)/2+gni*(sna1+snb1)/2-gii*sif1-thri))/taui
+sna1'=per*(-sna1+an*sea1*(1-sna1))/taun
+snb1'=per*(-snb1+an*seb1*(1-snb1))/taun
+
+per'=0
+par sec=2.5
+init seb1=0,sif1=.4661946,sna1=.6387,snb1=0,sea1=2.5,per=21.5
+# define ratios
+!gne=rne_e*gee
+!gni=rne_i*gei
+b sea1-sec
+b sea1'-sec
+b sna1-sna1'
+b snb1-snb1'
+b sif1-sif1'
+b seb1-seb1'
+b seb2-seb1'
+b seb3-seb2'
+# parameters
+par gee=20,rne_e=.75
+par gei=10,rne_i=.5
+par gie=30,gii=5
+par p=.9
+par an=1
+par thre=5,thri=5
+par taue=2,taun=80,taui=4
+par a=1,b=20,c=0
+@ dt=.001,total=1
+
+done
+

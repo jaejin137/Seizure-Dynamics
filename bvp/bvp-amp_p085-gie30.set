@@ -1,0 +1,300 @@
+## Set file for bvp-amp.ode on Fri Feb 28 11:06:12 2014
+18   Number of equations and auxiliaries
+19   Number of parameters
+# Numerical stuff
+1    nout
+40    nullcline mesh
+3   Runge-Kutta
+1  total
+0.0005  DeltaT
+0  T0
+0  Transient
+100  Bound
+1e-12  DtMin
+1  DtMax
+0.001  Tolerance
+0.001  Abs. Tolerance
+0  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+50   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+0   Delay flag
+0.9999999999999453  Current time
+0.9999999999999453  Last Time
+1   MyStart
+1   INFLAG
+# Delays
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+# Bndry conds
+sea1-sec   
+sea1'-sec   
+seb1-seb1'   
+sif1-sif1'   
+sna1-sna1'   
+snb1-snb1'   
+sea2-sea1'   
+seb2-seb1'   
+sif2-sif1'   
+sna2-sna1'   
+snb2-snb1'   
+sea3-sea2'   
+seb3-amp   
+sif3-sif2'   
+sna3-sna2'   
+snb3-snb2'   
+sna3'-snb3'   
+# Old ICs
+20.81  PER
+20  AMP
+5.177664  SEA1
+0  SEB1
+2.144531  SIF1
+0.6369632  SNA1
+0  SNB1
+5.177664  SEA2
+0  SEB2
+2.144531  SIF2
+0.6369632  SNA2
+0  SNB2
+0.05801804  SEA3
+20  SEB3
+0.3217813  SIF3
+0.6227686  SNA3
+0  SNB3
+# Ending  ICs
+20.81  PER
+20  AMP
+5.160436569975055  SEA1
+8.203872630814091e-18  SEB1
+2.142722813132409  SIF1
+0.6315693132107376  SNA1
+1.642568397021358e-18  SNB1
+0.05855183067883164  SEA2
+1.133709197954624e-58  SEB2
+0.3223485874280285  SIF2
+0.6266502439530653  SNA2
+6.023879058964872e-62  SNB2
+0.3257107866444805  SEA3
+5.866628238709148  SEB3
+4.940498893597839  SIF3
+0.6173552990378554  SNA3
+0.6479964808907869  SNB3
+# Parameters
+5.177664  sec
+0.5  eta
+0.3  zet
+20  gee
+0.75  rne_e
+10  gei
+0.5  rne_i
+30  gie
+5  gii
+0.85  p
+1  an
+5  thre
+5  thri
+2  taue
+80  taun
+4  taui
+1  a
+20  b
+0  c
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025516  rm
+0.7071038372138505  rm
+0.5000041633974482  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138505  rm
+0.7071097251469876  rm
+0    
+18    
+1    
+1    
+0    
+0    
+3    
+1    
+1    
+1    
+0    
+8    
+1    
+1    
+7    
+0    
+13    
+1    
+1    
+9    
+0    
+3    
+1    
+1    
+1    
+0    
+18    
+1    
+1    
+0    
+0    
+18    
+1    
+1    
+0    
+0    
+18    
+1    
+1    
+0    
+0    
+18    
+1    
+1    
+0    
+0    
+18    
+1    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+1   xmax
+0   xmin
+6.050000190734863   ymax
+-0.03427852317690849   ymin
+12   zmax
+-12   zmin
+0.5   
+2   
+3.007860833778977   
+0.3287160391628637   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+0   xlo
+-0.03427852317690849   ylo
+0   
+-1   
+1   xhi
+6.050000190734863   yhi
+1   
+1   
+# Transpose variables etc
+PER
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+# Array plot stuff
+
+1   NCols
+0   Row 1
+50   NRows
+8   RowSkip
+0  Zmin
+1  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+sec
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+PER
+PER
+20   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+0  Par1 low
+0  Par2 low
+1  Par1 high
+1  Par2 high
+sec
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dPER/dT=0
+dAMP/dT=0
+dSEA1/dT=PER*(-SEA1+F(GEE*(P*SEA1+(1-P)*SEB1)+GNE*(P*SNA1+(1-P)*SNB1)-GIE*SIF1-THRE))/TAUE
+dSEB1/dT=PER*(-SEB1+F(GEE*(P*SEB1+(1-P)*SEA1)+GNE*(P*SNB1+(1-P)*SNA1)-GIE*SIF1-THRE))/TAUE
+dSIF1/dT=PER*(-SIF1+F(GEI*(SEA1+SEB1)/2+GNI*(SNA1+SNB1)/2-GII*SIF1-THRI))/TAUI
+dSNA1/dT=PER*(-SNA1+AN*SEA1*(1-SNA1))/TAUN
+dSNB1/dT=PER*(-SNB1+AN*SEB1*(1-SNB1))/TAUN
+dSEA2/dT=ETA*PER*(-SEA2+F(GEE*(P*SEA2+(1-P)*SEB2)+GNE*(P*SNA2+(1-P)*SNB2)-GIE*SIF2-THRE))/TAUE
+dSEB2/dT=ETA*PER*(-SEB2+F(GEE*(P*SEB2+(1-P)*SEA2)+GNE*(P*SNB2+(1-P)*SNA2)-GIE*SIF2-THRE))/TAUE
+dSIF2/dT=ETA*PER*(-SIF2+F(GEI*(SEA2+SEB2)/2+GNI*(SNA2+SNB2)/2-GII*SIF2-THRI))/TAUI
+dSNA2/dT=ETA*PER*(-SNA2+AN*SEA2*(1-SNA2))/TAUN
+dSNB2/dT=ETA*PER*(-SNB2+AN*SEB2*(1-SNB2))/TAUN
+dSEA3/dT=ZET*PER*(-SEA3+F(GEE*(P*SEA3+(1-P)*SEB3)+GNE*(P*SNA3+(1-P)*SNB3)-GIE*SIF3-THRE))/TAUE
+dSEB3/dT=ZET*PER*(-SEB3+F(GEE*(P*SEB3+(1-P)*SEA3)+GNE*(P*SNB3+(1-P)*SNA3)-GIE*SIF3-THRE))/TAUE
+dSIF3/dT=ZET*PER*(-SIF3+F(GEI*(SEA3+SEB3)/2+GNI*(SNA3+SNB3)/2-GII*SIF3-THRI))/TAUI
+dSNA3/dT=ZET*PER*(-SNA3+AN*SEA3*(1-SNA3))/TAUN
+dSNB3/dT=ZET*PER*(-SNB3+AN*SEB3*(1-SNB3))/TAUN
+DF=SNA3-SNB3
+
+User-defined functions:
+F(X) = A*SQRT((X-C)/(1-EXP(-B*(X-C))))  

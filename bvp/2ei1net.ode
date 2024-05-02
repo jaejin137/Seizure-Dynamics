@@ -1,0 +1,97 @@
+# Aug 15, 2013
+# Local model with one excitatory, one fast and one slow inhibitory populations.
+# "Reduced" model.
+
+# nonlinearity
+f(x)=a*sqrt((x-c)/(1-exp(-b*(x-c))))
+
+# fast synapses of excitatory populations
+sea'=(-sea+f(gee*(p*sea+(1-p)*seb)+gne*(p*sna+(1-p)*snb)-gie*sif-thre-epsa+siga*wa*h(t)+stima(t)))/taue_a
+seb'=(-seb+f(gee*(p*seb+(1-p)*sea)+gne*(p*snb+(1-p)*sna)-gie*sif-thre-epsb+sigb*wb*h(t)+stimb(t)))/taue_a
+
+# fast inhibitory synapses
+sif'=(-sif+f(gei*(sea+seb)/2+gni*(sna+snb)/2-gii*sif-thri+sigi*wi*h(t)+stimi(t)))/taui_f
+
+# slow synapses of excitatory and pool populations
+sna'=(-sna+an*sea*(1-sna))/taue_n
+snb'=(-snb+an*seb*(1-snb))/taue_n
+
+global 1 t-per*(1+eta) {seb=seb+amp}
+par per=21.32,eta=0.5,amp=100
+
+# define ratios
+!gne=rne_e*gee
+!gni=rne_i*gei
+
+# random noises
+wiener wa
+wiener wb
+wiener wi
+
+# auxiliary function definitions
+h(t) = heav(t-t_nson)*heav(t_nsoff-t)
+
+# various stimuli on a, b, c, d, e, p, i, and s of each network
+stima(t)=st1a(t)+st2a(t)+st3a(t)+st4a(t)+st5a(t)
+stimb(t)=st1b(t)+st2b(t)+st3b(t)+st4b(t)+st5b(t)
+stimi(t)=st1i(t)+st2i(t)+st3i(t)+st4i(t)+st5i(t)
+
+# stimulus 1
+st1a(t)=.5*amp1a*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+st1b(t)=.5*amp1b*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+st1i(t)=.5*amp1i*(cos(2*pi*nu1/1000*(t-ton1))+1)*heav(t-ton1)*heav(ton1+dur1-t)
+# stimulus2
+st2a(t)=.5*amp2a*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+st2b(t)=.5*amp2b*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+st2i(t)=.5*amp2i*(cos(2*pi*nu2/1000*(t-ton2))+1)*heav(t-ton2)*heav(ton2+dur2-t)
+# stimulus3
+st3a(t)=.5*amp3a*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+st3b(t)=.5*amp3b*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+st3i(t)=.5*amp3i*(cos(2*pi*nu3/1000*(t-ton3))+1)*heav(t-ton3)*heav(ton3+dur3-t)
+# stimulus4
+st4a(t)=.5*amp4a*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+st4b(t)=.5*amp4b*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+st4i(t)=.5*amp4i*(cos(2*pi*nu4/1000*(t-ton4))+1)*heav(t-ton4)*heav(ton4+dur4-t)
+# stimulus5
+st5a(t)=.5*amp5a*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+st5b(t)=.5*amp5b*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+st5i(t)=.5*amp5i*(cos(2*pi*nu5/1000*(t-ton5))+1)*heav(t-ton5)*heav(ton5+dur5-t)
+
+# parameters
+par gee=20,rne_e=.75
+par gei=10,rne_i=.5
+par gie=20,gii=5
+par p=0.9
+par an=1
+par thre=5,thri=5
+par epsa=0,epsb=0.1
+par taue_a=2,taue_n=80,taui_f=4
+par a=1,b=20,c=0
+par siga=0,sigb=0,sigi=0
+par t_nson=0,t_nsoff=100000
+
+!amp1i=itoe1*(amp1a+amp1b)
+!amp2i=itoe2*(amp2a+amp2b)
+!amp3i=itoe3*(amp3a+amp3b)
+!amp4a=amp4
+!amp4b=amp4
+!amp4i=itoe4*(amp4a+amp4b)
+
+par nu1=0,nu2=0,nu3=0,nu4=0,nu5=0
+par itoe1=0.25
+par itoe2=0.25
+par itoe3=0.25
+par itoe4=0.25
+par amp1a=10,amp1b=0
+par amp2a=0,amp2b=0
+par amp3a=0,amp3b=0
+par amp4=0
+par amp5a=0,amp5b=0,amp5i=0
+par ton1=100,ton2=1000,ton3=2000,ton4=1000,ton5=1000
+par dur1=200,dur2=200,dur3=200,dur4=200,dur5=200
+
+@ meth=euler,total=2000,dt=0.1,bound=1000000000
+@ xp=t,yp=sea,xlo=0,ylo=-1,xhi=2000,yhi=20,nplot=5,yp2=seb,yp3=sif,yp4=sna,yp5=snb
+
+done
+

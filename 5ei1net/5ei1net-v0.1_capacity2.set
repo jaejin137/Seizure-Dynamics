@@ -1,0 +1,434 @@
+## Set file for 5ei1net-v0.1.ode on Fri Nov 22 14:53:18 2013
+67   Number of equations and auxiliaries
+71   Number of parameters
+# Numerical stuff
+1    nout
+40    nullcline mesh
+1   Euler
+5000  total
+0.1  DeltaT
+0  T0
+0  Transient
+1000000000  Bound
+1e-12  DtMin
+1  DtMax
+0.001  Tolerance
+0.001  Abs. Tolerance
+100  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+20   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+1   Delay flag
+5000.000000000658  Current time
+5000.000000000658  Last Time
+1   MyStart
+1   INFLAG
+# Delays
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+# Bndry conds
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+# Old ICs
+0  SEA
+0  SEB
+0  SEC
+0  SED
+0  SEE
+0  SIF
+0  SNA
+0  SNB
+0  SNC
+0  SND
+0  SNE
+# Ending  ICs
+4.446590812571219e-323  SEA
+4.446590812571219e-323  SEB
+1.393435359066243e-215  SEC
+1.380538616965742e-215  SED
+14.26599867235271  SEE
+3.042247072208314  SIF
+6.80142199431721e-17  SNA
+6.800073005045823e-17  SNB
+4.973583869970699e-06  SNC
+4.972562765881162e-06  SND
+0.9344949500523549  SNE
+# Parameters
+20  gee
+0.75  rne_e
+10  gei
+0.5  rne_i
+20  gie
+5  gii
+0.9  p
+3  taud
+2  taua
+80  taun
+4  taui
+1  an
+5  thre
+5  thri
+0  epsa
+0.01  epsb
+0.02  epsc
+0.03  epsd
+0.04  epse
+0  sige
+0  sigi
+0  t_nson
+100000  t_nsoff
+1  a
+20  b
+0  c
+0  nu1
+0  nu2
+0  nu3
+0  nu4
+0  nu5
+0.25  itoe1
+0.25  itoe2
+0.25  itoe3
+0.25  itoe4
+0.25  itoe5
+60  amp1a
+0  amp1b
+0  amp1c
+0  amp1d
+0  amp1e
+0  amp2a
+60  amp2b
+0  amp2c
+0  amp2d
+0  amp2e
+0  amp3a
+0  amp3b
+100  amp3c
+0  amp3d
+0  amp3e
+0  amp4a
+0  amp4b
+0  amp4c
+60  amp4d
+0  amp4e
+0  amp5a
+0  amp5b
+0  amp5c
+0  amp5d
+100  amp5e
+100  ton1
+1000  ton2
+2000  ton3
+3000  ton4
+4000  ton5
+100  dur1
+100  dur2
+100  dur3
+100  dur4
+100  dur5
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025516  rm
+0.7071038372138505  rm
+0.5000041633974482  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138505  rm
+0.7071097251469876  rm
+0    
+1    
+1    
+1    
+1    
+0    
+2    
+1    
+1    
+2    
+0    
+3    
+1    
+1    
+3    
+0    
+3    
+1    
+1    
+4    
+0    
+4    
+1    
+1    
+5    
+0    
+5    
+1    
+1    
+6    
+0    
+6    
+1    
+1    
+9    
+0    
+17    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+5000   xmax
+0   xmin
+20   ymax
+0   ymin
+12   zmax
+-12   zmin
+2500   
+0.0004   
+10   
+0.1   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+0   xlo
+0   ylo
+0   
+-1   
+5000   xhi
+20   yhi
+1000   
+20   
+# Transpose variables etc
+SEA
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+# Array plot stuff
+sea
+6   NCols
+0   Row 1
+5000   NRows
+10   RowSkip
+0  Zmin
+10  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+gee
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+amp3c
+SEA
+9   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+10  Par1 low
+0  Par2 low
+100  Par1 high
+1  Par2 high
+gee
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dSEA/dT=(-SEA+F(GEE*(P*DSEA+(1-P)*DSESUM_A)+GNE*(P*DSNA+(1-P)*DSNSUM_A)-GIE*DSIF_E-THRE-EPSA+SIGE*WA*H(T)+STIMA(T)))/TAUA
+dSEB/dT=(-SEB+F(GEE*(P*DSEB+(1-P)*DSESUM_B)+GNE*(P*DSNB+(1-P)*DSNSUM_B)-GIE*DSIF_E-THRE-EPSB+SIGE*WB*H(T)+STIMB(T)))/TAUA
+dSEC/dT=(-SEC+F(GEE*(P*DSEC+(1-P)*DSESUM_C)+GNE*(P*DSNC+(1-P)*DSNSUM_C)-GIE*DSIF_E-THRE-EPSC+SIGE*WC*H(T)+STIMC(T)))/TAUA
+dSED/dT=(-SED+F(GEE*(P*DSED+(1-P)*DSESUM_D)+GNE*(P*DSND+(1-P)*DSNSUM_D)-GIE*DSIF_E-THRE-EPSD+SIGE*WD*H(T)+STIMD(T)))/TAUA
+dSEE/dT=(-SEE+F(GEE*(P*DSEE+(1-P)*DSESUM_E)+GNE*(P*DSNE+(1-P)*DSNSUM_E)-GIE*DSIF_E-THRE-EPSE+SIGE*WE*H(T)+STIME(T)))/TAUA
+dSIF/dT=(-SIF+F(GEI*DSESUM_I+GNI*DSNSUM_I-GII*DSIF_I-THRI+SIGI*WI*H(T)+STIMI(T)))/TAUI
+dSNA/dT=(-SNA+AN*SEA*(1-SNA))/TAUN
+dSNB/dT=(-SNB+AN*SEB*(1-SNB))/TAUN
+dSNC/dT=(-SNC+AN*SEC*(1-SNC))/TAUN
+dSND/dT=(-SND+AN*SED*(1-SND))/TAUN
+dSNE/dT=(-SNE+AN*SEE*(1-SNE))/TAUN
+STIMA=STIMA(T)
+STIMB=STIMB(T)
+STIMC=STIMC(T)
+STIMD=STIMD(T)
+STIME=STIME(T)
+STIM=(STIMA(T)+STIMB(T)+STIMC(T)+STIMD(T)+STIME(T))/5
+P=P
+GEE=GEE
+RNE_E=RNE_E
+GEI=GEI
+RNE_I=RNE_I
+GIE=GIE
+FREQ_1=NU1
+FREQ_2=NU2
+FREQ_3=NU3
+FREQ_4=NU4
+FREQ_5=NU5
+ITOE_1=ITOE1
+ITOE_2=ITOE2
+ITOE_3=ITOE3
+ITOE_4=ITOE4
+ITOE_5=ITOE5
+AMP_1A=AMP1A
+AMP_1B=AMP1B
+AMP_1C=AMP1C
+AMP_1D=AMP1D
+AMP_1E=AMP1E
+AMP_2A=AMP2A
+AMP_2B=AMP2B
+AMP_2C=AMP2C
+AMP_2D=AMP2D
+AMP_2E=AMP2E
+AMP_3A=AMP3A
+AMP_3B=AMP3B
+AMP_3C=AMP3C
+AMP_3D=AMP3D
+AMP_3E=AMP3E
+AMP_4A=AMP4A
+AMP_4B=AMP4B
+AMP_4C=AMP4C
+AMP_4D=AMP4D
+AMP_4E=AMP4E
+AMP_5A=AMP5A
+AMP_5B=AMP5B
+AMP_5C=AMP5C
+AMP_5D=AMP5D
+AMP_5E=AMP5E
+DUR_1=DUR1
+DUR_2=DUR2
+DUR_3=DUR3
+DUR_4=DUR4
+DUR_5=DUR5
+TAU_A=TAUA
+TAU_N=TAUN
+TAU_I=TAUI
+TAU_D=TAUD
+
+where ...
+DSEA = DELAY(SEA,TAUD)   
+DSEB = DELAY(SEB,TAUD)   
+DSEC = DELAY(SEC,TAUD)   
+DSED = DELAY(SED,TAUD)   
+DSEE = DELAY(SEE,TAUD)   
+DSNA = DELAY(SNA,TAUD)   
+DSNB = DELAY(SNB,TAUD)   
+DSNC = DELAY(SNC,TAUD)   
+DSND = DELAY(SND,TAUD)   
+DSNE = DELAY(SNE,TAUD)   
+DSESUM_A = (DELAY(SEB,TAUD)+DELAY(SEC,TAUD)+DELAY(SED,TAUD)+DELAY(SEE,TAUD))/4   
+DSNSUM_A = (DELAY(SNB,TAUD)+DELAY(SNC,TAUD)+DELAY(SND,TAUD)+DELAY(SNE,TAUD))/4   
+DSESUM_B = (DELAY(SEA,TAUD)+DELAY(SEC,TAUD)+DELAY(SED,TAUD)+DELAY(SEE,TAUD))/4   
+DSNSUM_B = (DELAY(SNA,TAUD)+DELAY(SNC,TAUD)+DELAY(SND,TAUD)+DELAY(SNE,TAUD))/4   
+DSESUM_C = (DELAY(SEA,TAUD)+DELAY(SEB,TAUD)+DELAY(SED,TAUD)+DELAY(SEE,TAUD))/4   
+DSNSUM_C = (DELAY(SNA,TAUD)+DELAY(SNB,TAUD)+DELAY(SND,TAUD)+DELAY(SNE,TAUD))/4   
+DSESUM_D = (DELAY(SEA,TAUD)+DELAY(SEB,TAUD)+DELAY(SEC,TAUD)+DELAY(SEE,TAUD))/4   
+DSNSUM_D = (DELAY(SNA,TAUD)+DELAY(SNB,TAUD)+DELAY(SNC,TAUD)+DELAY(SNE,TAUD))/4   
+DSESUM_E = (DELAY(SEA,TAUD)+DELAY(SEB,TAUD)+DELAY(SEC,TAUD)+DELAY(SED,TAUD))/4   
+DSNSUM_E = (DELAY(SNA,TAUD)+DELAY(SNB,TAUD)+DELAY(SNC,TAUD)+DELAY(SND,TAUD))/4   
+DSESUM_I = (DELAY(SEA,TAUD)+DELAY(SEB,TAUD)+DELAY(SEC,TAUD)+DELAY(SED,TAUD)+DELAY(SEE,TAUD))/5   
+DSNSUM_I = (DELAY(SNA,TAUD)+DELAY(SNB,TAUD)+DELAY(SNC,TAUD)+DELAY(SND,TAUD)+DELAY(SNE,TAUD))/5   
+DSIF_E = DELAY(SIF,TAUD)   
+DSIF_I = DELAY(SIF,TAUD)   
+
+User-defined functions:
+F(X) = A*SQRT((X-C)/(1-EXP(-B*(X-C))))  
+H(T) =  HEAV(T-T_NSON)*HEAV(T_NSOFF-T)  
+STIMA(T) = ST1A(T)+ST2A(T)+ST3A(T)+ST4A(T)+ST5A(T)  
+STIMB(T) = ST1B(T)+ST2B(T)+ST3B(T)+ST4B(T)+ST5B(T)  
+STIMC(T) = ST1C(T)+ST2C(T)+ST3C(T)+ST4C(T)+ST5C(T)  
+STIMD(T) = ST1D(T)+ST2D(T)+ST3D(T)+ST4D(T)+ST5D(T)  
+STIME(T) = ST1E(T)+ST2E(T)+ST3E(T)+ST4E(T)+ST5E(T)  
+STIMI(T) = ST1I(T)+ST2I(T)+ST3I(T)+ST4I(T)+ST5I(T)  
+ST1A(T) = .5*AMP1A*(COS(2*PI*NU1/1000*(T-TON1))+1)*HEAV(T-TON1)*HEAV(TON1+DUR1-T)  
+ST1B(T) = .5*AMP1B*(COS(2*PI*NU1/1000*(T-TON1))+1)*HEAV(T-TON1)*HEAV(TON1+DUR1-T)  
+ST1C(T) = .5*AMP1C*(COS(2*PI*NU1/1000*(T-TON1))+1)*HEAV(T-TON1)*HEAV(TON1+DUR1-T)  
+ST1D(T) = .5*AMP1D*(COS(2*PI*NU1/1000*(T-TON1))+1)*HEAV(T-TON1)*HEAV(TON1+DUR1-T)  
+ST1E(T) = .5*AMP1E*(COS(2*PI*NU1/1000*(T-TON1))+1)*HEAV(T-TON1)*HEAV(TON1+DUR1-T)  
+ST1I(T) = .5*AMP1I*(COS(2*PI*NU1/1000*(T-TON1))+1)*HEAV(T-TON1)*HEAV(TON1+DUR1-T)  
+ST2A(T) = .5*AMP2A*(COS(2*PI*NU2/1000*(T-TON2))+1)*HEAV(T-TON2)*HEAV(TON2+DUR2-T)  
+ST2B(T) = .5*AMP2B*(COS(2*PI*NU2/1000*(T-TON2))+1)*HEAV(T-TON2)*HEAV(TON2+DUR2-T)  
+ST2C(T) = .5*AMP2C*(COS(2*PI*NU2/1000*(T-TON2))+1)*HEAV(T-TON2)*HEAV(TON2+DUR2-T)  
+ST2D(T) = .5*AMP2D*(COS(2*PI*NU2/1000*(T-TON2))+1)*HEAV(T-TON2)*HEAV(TON2+DUR2-T)  
+ST2E(T) = .5*AMP2E*(COS(2*PI*NU2/1000*(T-TON2))+1)*HEAV(T-TON2)*HEAV(TON2+DUR2-T)  
+ST2I(T) = .5*AMP2I*(COS(2*PI*NU2/1000*(T-TON2))+1)*HEAV(T-TON2)*HEAV(TON2+DUR2-T)  
+ST3A(T) = .5*AMP3A*(COS(2*PI*NU3/1000*(T-TON3))+1)*HEAV(T-TON3)*HEAV(TON3+DUR3-T)  
+ST3B(T) = .5*AMP3B*(COS(2*PI*NU3/1000*(T-TON3))+1)*HEAV(T-TON3)*HEAV(TON3+DUR3-T)  
+ST3C(T) = .5*AMP3C*(COS(2*PI*NU3/1000*(T-TON3))+1)*HEAV(T-TON3)*HEAV(TON3+DUR3-T)  
+ST3D(T) = .5*AMP3D*(COS(2*PI*NU3/1000*(T-TON3))+1)*HEAV(T-TON3)*HEAV(TON3+DUR3-T)  
+ST3E(T) = .5*AMP3E*(COS(2*PI*NU3/1000*(T-TON3))+1)*HEAV(T-TON3)*HEAV(TON3+DUR3-T)  
+ST3I(T) = .5*AMP3I*(COS(2*PI*NU3/1000*(T-TON3))+1)*HEAV(T-TON3)*HEAV(TON3+DUR3-T)  
+ST4A(T) = .5*AMP4A*(COS(2*PI*NU4/1000*(T-TON4))+1)*HEAV(T-TON4)*HEAV(TON4+DUR4-T)  
+ST4B(T) = .5*AMP4B*(COS(2*PI*NU4/1000*(T-TON4))+1)*HEAV(T-TON4)*HEAV(TON4+DUR4-T)  
+ST4C(T) = .5*AMP4C*(COS(2*PI*NU4/1000*(T-TON4))+1)*HEAV(T-TON4)*HEAV(TON4+DUR4-T)  
+ST4D(T) = .5*AMP4D*(COS(2*PI*NU4/1000*(T-TON4))+1)*HEAV(T-TON4)*HEAV(TON4+DUR4-T)  
+ST4E(T) = .5*AMP4E*(COS(2*PI*NU4/1000*(T-TON4))+1)*HEAV(T-TON4)*HEAV(TON4+DUR4-T)  
+ST4I(T) = .5*AMP4I*(COS(2*PI*NU4/1000*(T-TON4))+1)*HEAV(T-TON4)*HEAV(TON4+DUR4-T)  
+ST5A(T) = .5*AMP5A*(COS(2*PI*NU5/1000*(T-TON5))+1)*HEAV(T-TON5)*HEAV(TON5+DUR5-T)  
+ST5B(T) = .5*AMP5B*(COS(2*PI*NU5/1000*(T-TON5))+1)*HEAV(T-TON5)*HEAV(TON5+DUR5-T)  
+ST5C(T) = .5*AMP5C*(COS(2*PI*NU5/1000*(T-TON5))+1)*HEAV(T-TON5)*HEAV(TON5+DUR5-T)  
+ST5D(T) = .5*AMP5D*(COS(2*PI*NU5/1000*(T-TON5))+1)*HEAV(T-TON5)*HEAV(TON5+DUR5-T)  
+ST5E(T) = .5*AMP5E*(COS(2*PI*NU5/1000*(T-TON5))+1)*HEAV(T-TON5)*HEAV(TON5+DUR5-T)  
+ST5I(T) = .5*AMP5I*(COS(2*PI*NU5/1000*(T-TON5))+1)*HEAV(T-TON5)*HEAV(TON5+DUR5-T)  

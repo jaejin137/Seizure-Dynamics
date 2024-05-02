@@ -1,0 +1,41 @@
+============================================
+COLOR			STATE
+--------------------------------------------
+red			all up
+magenta			upSW
+light purble		upsync(beta)
+light magenta		upsync(gamma)
+plum			embeded sync
+blue			spiking wave
+brown			sync(theta)
+light orange		sync(alpha)
+yellow orange		sync(beta)
+orange			sync(gamma)
+yellow			osc WTA
+dark green		uposc WTA
+green			WTA
+dark blue		baseline
+cyan			flip & WTA
+cyan blue		flip & osc WTA
+purple			allup w/ flipped amps
+
+============================================
+STATE			COLOR
+--------------------------------------------
+all up	 		red
+upsw  			magenta
+upsync(beta)		light purple
+upsync(gamma)  		light magenta
+embeded gamma sync 	plum
+spiking wave		blue
+sync(theta)		brown
+sync(alpha)		light orange
+sync(beta)		yellow orange
+sync(gamma)		orange
+osc WTA			yellow
+uposc WTA		dark green
+WTA			green
+baseline		dark blue (25%)
+flip & WTA		cyan
+flip & osc WTA		cyan blue
+allup w/flipped amps	purple

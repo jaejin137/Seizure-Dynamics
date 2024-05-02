@@ -1,0 +1,37 @@
+red - allup
+magenta - upSW
+light purple -upbeta sync
+light magenta - upgamma sync
+plum - nested beta/gamma sync
+purple - "latent" wave
+blue - SW
+brown - theta sync
+light orange - alpha sync
+gray - sparse sync at beta
+yellow orange - beta sync
+orange - gamma sync
+yellow - osc WTA
+dark green - uposc WTA
+green - WTA
+dark blue - baseline
+cyan - flip & WTA
+cyan blue - flip & osc WTA
+---------------------------------
+allup - red
+upSw - magenta
+upbeta sync - light purple 
+upgamma sync - light magenta
+nested beta/gamma sync - plum
+"latent" wave - purple
+SW - blue
+theta sync - brown
+alpha sync - light orange
+sparse beta sync - gray
+beta sync - yellow orange
+gamma sync - orange
+osc WTA - yellow
+uposc WTA - dark green
+WTA - green
+baseline - dark blue
+flip & WTA - cyan
+flip & osc WTA - cyan blue 

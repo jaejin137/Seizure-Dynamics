@@ -1,0 +1,62 @@
+# May 29, 2014
+# Local model with ten excitatory, one fast inhibitory populations.
+# "Reduced" model.
+
+# nonlinearity
+f(x)=1/(pi*taum)*sqrt((x-c)/(1-exp(-b*(x-c))))
+
+# total sum of se and sn
+setot=sum(0,9)of(shift(se1,i'))/10
+sntot=sum(0,9)of(shift(se1,i'))/10
+# sum of se and sn from other populations
+sesum[1..10]=(setot-se[j])/9
+snsum[1..10]=(sntot-sn[j])/9
+
+# fast synapses of excitatory populations
+se[1..10]'=(-se[j]+f(gee*((1-p)*se[j]+p*sesum[j])+gne*((1-p)*sn[j]+p*snsum[j])-gie*si-gz*ze[j]-thre+sige*normal(0,1)/sqrt(dt)*h(t)+stime[j](t)))/taue
+
+# fast inhibitory synapses
+si'=(-si+f(gei*setot+gni*sntot-gii*si-thri+sigi*normal(0,1)/sqrt(dt)*h(t)+stimi(t)))/taui
+
+# slow synapses of excitatory and pool populations
+#sn[1..10]'=(-sn[j]+an*se[j]*(1-sn[j]))/taun
+sn[1..10]'=(-sn[j]+an*se[j]^nn*(1-sn[j]))/taun
+
+# adaptation
+ze[1..10]'=(-ze[j]+az*f(beta*(se[j]-tz))*(1-ze[j]))/tauz
+
+# auxiliary function definitions
+h(t) = heav(t-t_nson)*heav(t_nsoff-t)
+
+# stimuli
+stime[1..10](t)=.5*amp[j]*(cos(2*pi*nu[j]/1000*(t-ton[j]))+1)*heav(t-ton[j])*heav(ton[j]+dur[j]-t)
+#stimi(t)=itoe*sum(0,9)of(shift(stime1(t),i'))
+stimi(t)=itoe*(stime1(t)+stime2(t)+stime3(t)+stime4(t)+stime5(t)+stime6(t)+stime7(t)+stime8(t)+stime9(t)+stime10(t))
+# parameters
+!gne=rne_e*gee
+!gni=rne_i*gei
+par gee=40,rne_e=.3
+par gei=20,rne_i=.05
+par gie=20,gii=5
+par gz=1
+par p=0.1
+par an=1,nn=5
+par az=0.75,beta=12,tz=.7
+par thre=.15,thri=.15
+par taue=2,taui=4,taun=80,taum=5,tauz=40
+par b=50,c=0
+par sige=0,sigi=0,dt=.1
+par t_nson=0,t_nsoff=100000
+
+# input parameters
+par amp1=0,amp2=0,amp3=0,amp4=0,amp5=0,amp6=0,amp7=0,amp8=0,amp9=0,amp10=0
+par ton1=100,ton2=1000,ton3=2000,ton4=1000,ton5=1000,ton6=1000,ton7=1000,ton8=1000,ton9=1000,ton10=1000
+par dur1=200,dur2=200,dur3=200,dur4=200,dur5=200,dur6=200,dur7=200,dur8=200,dur9=200,dur10=200
+par nu1=0,nu2=0,nu3=0,nu4=0,nu5=0,nu6=0,nu7=0,nu8=0,nu9=0,nu10=0
+par itoe=0
+
+@ meth=euler,total=2000,dt=.1,bound=1000000000
+@ xp=t,yp=se1,xlo=0,ylo=0,xhi=2000,yhi=1,nplot=8,yp2=se2,yp3=se3,yp4=se4,yp5=se5,yp6=se6,yp7=se7,yp8=si
+
+done
+

@@ -1,0 +1,351 @@
+# Jan.30, 2013
+# Global model comprised of 2 local networks which have two excitatory populations,
+# one fast and one slow inhibitory populations, and a pool population.
+# Each local network has fast and slow synapses and adaptation.
+# Two local networks are connected to each other only by excitatory synapses.
+# Mutual connections are primary and cross connections are secondary between local networks.
+
+# nonlinearity
+f(x)=a*sqrt((x-c)/(1-exp(-b*(x-c))))
+
+# sum of inputs from e to p within a network
+sesum[1..2]=sea[j]+seb[j]
+snsum[1..2]=sna[j]+snb[j]
+
+# delayed self-inputs of e within a network
+dsea[1..2]=delay(sea[j],taud_l+eta_ee)
+dsna[1..2]=delay(sna[j],taud_l+eta_ee)
+dseb[1..2]=delay(seb[j],taud_l+eta_ee)
+dsnb[1..2]=delay(snb[j],taud_l+eta_ee)
+
+# delayed input from i to e within a network
+dsif_e[1..2]=delay(sif[j],taud_l+eta_ie)
+# delayed input from i to i within a network
+dsif_i[1..2]=delay(sif[j],taud_l+eta_ii)
+# delayed input from i to p within a network
+dsif_p[1..2]=delay(sif[j],taud_l+eta_ip)
+# delayed input from s to e within a network
+dsis_e[1..2]=delay(sis[j],taud_l+eta_se)
+# delayed input from s to i within a network
+dsis_i[1..2]=delay(sis[j],taud_l+eta_si)
+# delayed input from s to p within a network
+dsis_p[1..2]=delay(sis[j],taud_l+eta_sp)
+
+# delayed self-inputs of p within a network
+dpe[1..2]=delay(pe[j],taud_l+eta_pp)
+dpn[1..2]=delay(pn[j],taud_l+eta_pp)
+# delayed input from p to e within a network
+dpe_e[1..2]=delay(pe[j],taud_l+eta_pe)
+dpn_e[1..2]=delay(pn[j],taud_l+eta_pe)
+# delayed input from p to i within a network
+dpe_i[1..2]=delay(pe[j],taud_l+eta_pi)
+dpn_i[1..2]=delay(pn[j],taud_l+eta_pi)
+# delayed input from p to s within a network
+dpe_s[1..2]=delay(pe[j],taud_l+eta_ps)
+dpn_s[1..2]=delay(pn[j],taud_l+eta_ps)
+
+# delayed sum of inputs from e to i within a network
+dsesum_i[1..2]=delay(sea[j],taud_l+eta_ei)+delay(seb[j],taud_l+eta_ei)
+dsnsum_i[1..2]=delay(sna[j],taud_l+eta_ei)+delay(snb[j],taud_l+eta_ei)
+# delayed sum of inputs from e to s within a network
+dsesum_s[1..2]=delay(sea[j],taud_l+eta_es)+delay(seb[j],taud_l+eta_es)
+dsnsum_s[1..2]=delay(sna[j],taud_l+eta_es)+delay(snb[j],taud_l+eta_es)
+
+# exclusive delayed sum of inputs from other populations within a local network
+dsesum_a[1..2]=delay(seb[j],taud_l+eta_ba)
+dsesum_b[1..2]=delay(sea[j],taud_l+eta_ab)
+dsnsum_a[1..2]=delay(snb[j],taud_l+eta_ba)
+dsnsum_b[1..2]=delay(sna[j],taud_l+eta_ab)
+
+# delayed sum of inputs from other populations of other local networks.
+# fast synapses
+seatot1=c_21*delay(sea2,taud_g+zeta_21)
+seatot2=c_12*delay(sea1,taud_g+zeta_12)
+sebtot1=c_21*delay(seb2,taud_g+zeta_21)
+sebtot2=c_12*delay(seb1,taud_g+zeta_12)
+# slow synapses
+snatot1=c_21*delay(sna2,taud_g+zeta_21)
+snatot2=c_12*delay(sna1,taud_g+zeta_12)
+snbtot1=c_21*delay(snb2,taud_g+zeta_21)
+snbtot2=c_12*delay(snb1,taud_g+zeta_12)
+# exclusive total of fast synapses
+setot_a[1..2]=sebtot[j]
+setot_b[1..2]=seatot[j]
+# exclusive total of slow synapses
+sntot_a[1..2]=snbtot[j]
+sntot_b[1..2]=snatot[j]
+
+# fast synapses of excitatory populations
+sea[1..2]'=(-sea[j]+f(gee[j]*(dsea[j]+(1-p[j])*dsesum_a[j])+gne[j]*(dsna[j]+(1-p[j])*dsnsum_a[j])+gpe[j]*dpe_e[j]+gqe[j]*dpn_e[j]-gie[j]*dsif_e[j]-gse[j]*dsis_e[j]-gz*zea[j]+dee*(seatot[j]+(1-lamb[j])*setot_a[j])+dne*(snatot[j]+(1-lamb[j])*sntot_a[j])-thre[j]-epsa+sige[j]*wa[j]*h(t)+stima(t,[j])))/taue_a
+seb[1..2]'=(-seb[j]+f(gee[j]*(dseb[j]+(1-p[j])*dsesum_b[j])+gne[j]*(dsnb[j]+(1-p[j])*dsnsum_b[j])+gpe[j]*dpe_e[j]+gqe[j]*dpn_e[j]-gie[j]*dsif_e[j]-gse[j]*dsis_e[j]-gz*zeb[j]+dee*(sebtot[j]+(1-lamb[j])*setot_b[j])+dne*(snbtot[j]+(1-lamb[j])*sntot_b[j])-thre[j]-epsb+sige[j]*wb[j]*h(t)+stimb(t,[j])))/taue_a
+
+# fast inhibitory synapses
+sif[1..2]'=(-sif[j]+f(gei[j]*dsesum_i[j]+gni[j]*dsnsum_i[j]+gpi[j]*dpe_i[j]+gqi[j]*dpn_i[j]-gii[j]*dsif_i[j]-gsi[j]*dsis_i[j]+dei*(kappi[j]*seatot[j]+(1-kappi[j])*setot_a[j])+dni*(kappi[j]*snatot[j]+(1-kappi[j])*sntot_a[j])-thri[j]+sigi[j]*wi[j]*h(t)+stimi(t,[j])))/taui_f
+
+# slow inhibitory synapses
+sis[1..2]'=(-sis[j]+f(ges[j]*dsesum_s[j]+gns[j]*dsnsum_s[j]+gps[j]*dpe_s[j]+gqs[j]*dpn_s[j]+des*(kapps[j]*seatot[j]+(1-kapps[j])*setot_a[j])+dns*(kapps[j]*snatot[j]+(1-kapps[j])*sntot_a[j])-thrs[j]+sigs[j]*ws[j]*h(t)+stims(t,[j])))/taui_s
+
+# fast synapse of pool population
+pe[1..2]'=(-pe[j]+f(gep[j]*sesum[j]+gnp[j]*snsum[j]+gpp[j]*dpe[j]+gqp[j]*dpn[j]-gip[j]*dsif_p[j]-gsp[j]*dsis_p[j]-gz*zp[j]-thrp[j]-epsp+sigp[j]*wp[j]*h(t)+stimp(t,[j])))/taue_a
+
+# slow synapses of excitatory and pool populations
+sna[1..2]'=(-sna[j]+an*sea[j]*(1-sna[j]))/taue_n
+snb[1..2]'=(-snb[j]+an*seb[j]*(1-snb[j]))/taue_n
+pn[1..2]'=(-pn[j]+aq*pe[j]*(1-pn[j]))/taue_n
+
+# adaptation
+zea[1..2]'=(-zea[j]+sea[j])/tauz
+zeb[1..2]'=(-zeb[j]+seb[j])/tauz
+zp[1..2]'=(-zp[j]+pe[j])/tauz
+
+# random noises
+wiener wa[1..2]
+wiener wb[1..2]
+wiener wp[1..2]
+wiener wi[1..2]
+wiener ws[1..2]
+
+# auxiliary function definitions
+h(t) = heav(t-t_nson)*heav(t_nsoff-t)
+
+# automatic parameter tuning for d
+dee=d*pee
+dne=d*pne
+dei=d*pei
+dni=d*pni
+des=d*pes
+dns=d*pns
+
+# automatic parameter tuning for pool
+# self coupling scaled by pself
+!gpp[1..2]=pself[j]*gee[j]
+!gqp[1..2]=pself[j]*gne[j]
+# symmetric coupling between e and p scaled by peconn
+!gep[1..2]=peconn[j]*gee[j]
+!gnp[1..2]=peconn[j]*gne[j]
+!gpe[1..2]=peconn[j]*gee[j]
+!gqe[1..2]=peconn[j]*gne[j]
+# coupling between i and p scaled by piconn
+!gip[1..2]=piconn[j]*gie[j]
+!gpi[1..2]=piconn[j]*gei[j]
+!gqi[1..2]=piconn[j]*gni[j]
+# coupling between s and p scaled by psconn
+!gsp[1..2]=psconn[j]*gse[j]
+!gps[1..2]=psconn[j]*ges[j]
+!gqs[1..2]=psconn[j]*gns[j]
+
+# various stimuli on a, b, c, d, e, p, i, and s of each network
+stima(t,x)=st1a(t,x)+st2a(t,x)+st3a(t,x)+st4a(t,x)+st5a(t,x)
+stimb(t,x)=st1b(t,x)+st2b(t,x)+st3b(t,x)+st4b(t,x)+st5b(t,x)
+stimi(t,x)=st1i(t,x)+st2i(t,x)+st3i(t,x)+st4i(t,x)+st5i(t,x)
+stims(t,x)=st1s(t,x)+st2s(t,x)+st3s(t,x)+st4s(t,x)+st5s(t,x)
+stimp(t,x)=st1p(t,x)+st2p(t,x)+st3p(t,x)+st4p(t,x)+st5p(t,x)
+
+# stimulus 1
+st1a(t,x)=.5*amp1a*(cos(2*pi*nu1/1000*(t-ton1a))+1)*heav(t-ton1a)*heav(ton1a+dur1a-t)*heav(x-x1l)*heav(x1r-x)
+st1b(t,x)=.5*amp1b*(cos(2*pi*nu1/1000*(t-ton1b))+1)*heav(t-ton1b)*heav(ton1b+dur1b-t)*heav(x-x1l)*heav(x1r-x)
+st1i(t,x)=.5*amp1i*(cos(2*pi*nu1/1000*(t-ton1i))+1)*heav(t-ton1i)*heav(ton1i+dur1i-t)*heav(x-x1l)*heav(x1r-x)
+st1s(t,x)=.5*amp1s*(cos(2*pi*nu1/1000*(t-ton1s))+1)*heav(t-ton1s)*heav(ton1s+dur1s-t)*heav(x-x1l)*heav(x1r-x)
+st1p(t,x)=.5*amp1p*(cos(2*pi*nu1/1000*(t-ton1p))+1)*heav(t-ton1p)*heav(ton1p+dur1p-t)*heav(x-x1l)*heav(x1r-x)
+# stimulus2
+st2a(t,x)=.5*amp2a*(cos(2*pi*nu2/1000*(t-ton2a))+1)*heav(t-ton2a)*heav(ton2a+dur2a-t)*heav(x-x2l)*heav(x2r-x)
+st2b(t,x)=.5*amp2b*(cos(2*pi*nu2/1000*(t-ton2b))+1)*heav(t-ton2b)*heav(ton2b+dur2b-t)*heav(x-x2l)*heav(x2r-x)
+st2i(t,x)=.5*amp2i*(cos(2*pi*nu2/1000*(t-ton2i))+1)*heav(t-ton2i)*heav(ton2i+dur2i-t)*heav(x-x2l)*heav(x2r-x)
+st2s(t,x)=.5*amp2s*(cos(2*pi*nu2/1000*(t-ton2s))+1)*heav(t-ton2s)*heav(ton2s+dur2s-t)*heav(x-x2l)*heav(x2r-x)
+st2p(t,x)=.5*amp2p*(cos(2*pi*nu2/1000*(t-ton2p))+1)*heav(t-ton2p)*heav(ton2p+dur2p-t)*heav(x-x2l)*heav(x2r-x)
+# stimulus3
+st3a(t,x)=.5*amp3a*(cos(2*pi*nu3/1000*(t-ton3a))+1)*heav(t-ton3a)*heav(ton3a+dur3a-t)*heav(x-x3l)*heav(x3r-x)
+st3b(t,x)=.5*amp3b*(cos(2*pi*nu3/1000*(t-ton3b))+1)*heav(t-ton3b)*heav(ton3b+dur3b-t)*heav(x-x3l)*heav(x3r-x)
+st3i(t,x)=.5*amp3i*(cos(2*pi*nu3/1000*(t-ton3i))+1)*heav(t-ton3i)*heav(ton3i+dur3i-t)*heav(x-x3l)*heav(x3r-x)
+st3s(t,x)=.5*amp3s*(cos(2*pi*nu3/1000*(t-ton3s))+1)*heav(t-ton3s)*heav(ton3s+dur3s-t)*heav(x-x3l)*heav(x3r-x)
+st3p(t,x)=.5*amp3p*(cos(2*pi*nu3/1000*(t-ton3p))+1)*heav(t-ton3p)*heav(ton3p+dur3p-t)*heav(x-x3l)*heav(x3r-x)
+# stimulus4
+st4a(t,x)=.5*amp4a*(cos(2*pi*nu4/1000*(t-ton4a))+1)*heav(t-ton4a)*heav(ton4a+dur4a-t)*heav(x-x4l)*heav(x4r-x)
+st4b(t,x)=.5*amp4b*(cos(2*pi*nu4/1000*(t-ton4b))+1)*heav(t-ton4b)*heav(ton4b+dur4b-t)*heav(x-x4l)*heav(x4r-x)
+st4i(t,x)=.5*amp4i*(cos(2*pi*nu4/1000*(t-ton4i))+1)*heav(t-ton4i)*heav(ton4i+dur4i-t)*heav(x-x4l)*heav(x4r-x)
+st4s(t,x)=.5*amp4s*(cos(2*pi*nu4/1000*(t-ton4s))+1)*heav(t-ton4s)*heav(ton4s+dur4s-t)*heav(x-x4l)*heav(x4r-x)
+st4p(t,x)=.5*amp4p*(cos(2*pi*nu4/1000*(t-ton4p))+1)*heav(t-ton4p)*heav(ton4p+dur4p-t)*heav(x-x4l)*heav(x4r-x)
+# stimulus5
+st5a(t,x)=.5*amp5a*(cos(2*pi*nu5/1000*(t-ton5a))+1)*heav(t-ton5a)*heav(ton5a+dur5a-t)*heav(x-x5a)*heav(x5a-x)
+st5b(t,x)=.5*amp5b*(cos(2*pi*nu5/1000*(t-ton5b))+1)*heav(t-ton5b)*heav(ton5b+dur5b-t)*heav(x-x5b)*heav(x5b-x)
+st5i(t,x)=.5*amp5i*(cos(2*pi*nu5/1000*(t-ton5i))+1)*heav(t-ton5i)*heav(ton5i+dur5i-t)*heav(x-x5i)*heav(x5i-x)
+st5s(t,x)=.5*amp5s*(cos(2*pi*nu5/1000*(t-ton5s))+1)*heav(t-ton5s)*heav(ton5s+dur5s-t)*heav(x-x5s)*heav(x5s-x)
+st5p(t,x)=.5*amp5p*(cos(2*pi*nu5/1000*(t-ton5p))+1)*heav(t-ton5p)*heav(ton5p+dur5p-t)*heav(x-x5p)*heav(x5p-x)
+
+# symmetrize some parameters
+!p1=p
+!p2=p
+!gee1=gee
+!gee2=gee
+!gne1=gne
+!gne2=gne
+!gei1=gei
+!gei2=gei
+!gni1=gni
+!gni2=gni
+!ges1=ges
+!ges2=ges
+!gns1=gns
+!gns2=gns
+!gii1=gii
+!gii2=gii
+!gie1=gie
+!gie2=gie
+!gse1=gse
+!gse2=gse
+!gsi1=gsi
+!gsi2=gsi
+!pself1=pself
+!pself2=pself
+!peconn1=peconn
+!peconn2=peconn
+!piconn1=piconn
+!piconn2=piconn
+!psconn1=psconn
+!psconn2=psconn
+!thre1=thre
+!thre2=thre
+!thrp1=thrp
+!thrp2=thrp
+!thri1=thri
+!thri2=thri
+!thrs1=thrs
+!thrs2=thrs
+!sige1=sige
+!sige2=sige
+!sigi1=sigi
+!sigi2=sigi
+!sigs1=sigs
+!sigs2=sigs
+!sigp1=sigp
+!sigp2=sigp
+
+# parameters
+par d=0.1
+par pee=20,pne=10,pei=5,pni=2,pes=1,pns=.5
+par c_21=1.0,c_12=1.0
+par lamb1=0.9,kappi1=0.5,kapps1=0.5
+par lamb2=0.9,kappi2=0.5,kapps2=0.5
+par taud_g=15
+par zeta_21=0,zeta_12=0
+par p=0.9
+par gee=20,gne=10,gei=5,gni=2,ges=1,gns=0.5,gii=5,gie=15,gse=10,gsi=2
+par pself=0.1,peconn=0.1,piconn=0.1,psconn=0.1
+par gz=0.1,an=1,hz=0.1,aq=1
+par thre=5,thrp=5,thri=10,thrs=10
+par epsa=0.01,epsb=0.02,epsp=0
+par taud_l=3
+par eta_ee=0,eta_ab=0,eta_ba=0,eta_ei=0,eta_es=0,eta_ep=0
+par eta_ii=0,eta_ie=0,eta_is=0,eta_ip=0
+par eta_se=0,eta_si=0,eta_sp=0
+par eta_pp=0,eta_pe=0,eta_pi=0,eta_ps=0
+par taue_a=2,taue_n=80,taui_f=4,taui_s=45,tauz=80
+par sige=0,sigi=0,sigs=0,sigp=0
+par t_nson=0,t_nsoff=100000
+par a=1,b=50,c=0
+
+!amp1i=itoe1*(amp1a+amp1b)
+!amp2i=itoe2*(amp2a+amp2b)
+!amp3i=itoe3*(amp3a+amp3b)
+!amp4i=itoe4*amp4
+!amp5i=itoe5*amp5
+
+par nu1=50,nu2=0,nu3=0,nu4=0,nu5=0
+par itoe1=0.2,itoe2=0.2,itoe3=0.2,itoe4=0.2,itoe5=0.2
+par amp1a=200,amp1b=0,amp1s=0,amp1p=0
+par amp2a=0,amp2b=0,amp2s=0,amp2p=0
+par amp3a=0,amp3b=0,amp3s=0,amp3p=0
+!amp4a=amp4
+!amp4b=amp4
+par amp4=0,amp4s=0,amp4p=0
+!amp5a=amp5
+!amp5b=amp5
+par amp5=0,amp5s=0,amp5p=0
+par ton1a=100,ton1b=100,ton1i=100,ton1s=100,ton1p=100
+par ton2a=1000,ton2b=1000,ton2i=1000,ton2s=1000,ton2p=1000
+par ton3a=2000,ton3b=2000,ton3i=2000,ton3s=2000,ton3p=2000
+!ton4a=ton4
+!ton4b=ton4
+par ton4=1000,ton4i=1000,ton4s=1000,ton4p=1000
+!ton5a=ton5
+!ton5b=ton5
+par ton5=1000,ton5i=1000,ton5s=1000,ton5p=1000
+par dur1a=100,dur1b=100,dur1i=100,dur1s=100,dur1p=100
+par dur2a=100,dur2b=100,dur2i=100,dur2s=100,dur2p=100
+par dur3a=100,dur3b=100,dur3i=100,dur3s=100,dur3p=100
+!dur4a=dur4
+!dur4b=dur4
+par dur4=100,dur4i=100,dur4s=100,dur4p=100
+!dur5a=dur5
+!dur5b=dur5
+par dur5=100,dur5i=100,dur5s=100,dur5p=100
+par x1l=1,x1r=1,x2l=2,x2r=2,x3l=2,x3r=2,x4l=1,x4r=2,x5a=1,x5b=2,x5p=1,x5i=1,x5s=1
+
+aux se1a=sea1
+aux se1b=seb1
+aux si1f=sif1
+aux si1s=sis1
+aux sp1=pe1
+
+aux se2a=sea2
+aux se2b=seb2
+aux si2f=sif2
+aux si2s=sis2
+aux sp2=pe2
+
+aux stim1a=stima(t,1)
+aux stim1b=stimb(t,1)
+aux stim1i=stimi(t,1)
+aux stim2a=stima(t,2)
+aux stim2b=stimb(t,2)
+aux stim2i=stimi(t,2)
+
+aux p=p
+aux gei=gei
+aux ges=ges
+aux gie=gie
+aux gse=gse
+aux gsi=gsi
+aux freq_1=nu1
+aux freq_2=nu2
+aux freq_3=nu3
+aux freq_4=nu4
+aux freq_5=nu5
+aux itoe_1=itoe1
+aux itoe_2=itoe2
+aux itoe_3=itoe3
+aux itoe_4=itoe4
+aux itoe_5=itoe5
+aux amp_1a=amp1a
+aux amp_1b=amp1b
+aux amp_2a=amp2a
+aux amp_2b=amp2b
+aux amp_3a=amp3a
+aux amp_3b=amp3b
+aux amp_4=amp4
+aux amp_5=amp5
+aux dur_1a=dur1a
+aux dur_1b=dur1b
+aux dur_2a=dur2a
+aux dur_2b=dur2b
+aux dur_3a=dur3a
+aux dur_3b=dur3b
+aux dur_4=dur4
+aux dur_5=dur5
+aux gain=d
+aux conn_12=c_12
+aux conn_21=c_21
+aux lambda_1=lamb1
+aux lambda_2=lamb2
+aux delay_l=taud_l
+aux delay_g=taud_g
+aux tau_a = taue_a
+aux tau_n = taue_n
+aux tau_i = taui_f
+aux tau_s = taui_s
+
+@ meth=euler,total=1000,dt=0.1,bound=1000000000,delay=100
+@ xp=t,yp=se1a,xlo=0,ylo=-1,xhi=1000,yhi=50,nplot=8,yp2=se1b,yp3=se2a,yp4=se2b,yp5=si1f,yp6=si2f,yp7=si1s,yp8=si2s
+
+done
+

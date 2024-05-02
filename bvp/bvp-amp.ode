@@ -1,0 +1,84 @@
+#### DO NOT TOUCH  THIS FILE IS GOOD
+f(x)=a*sqrt((x-c)/(1-exp(-b*(x-c))))
+
+per'=0
+amp'=0
+
+## Stage 1
+# get the periodic from this
+sea1'=per*(-sea1+f(gee*(p*sea1+(1-p)*seb1)+gne*(p*sna1+(1-p)*snb1)-gie*sif1-thre))/taue
+seb1'=per*(-seb1+f(gee*(p*seb1+(1-p)*sea1)+gne*(p*snb1+(1-p)*sna1)-gie*sif1-thre))/taue
+sif1'=per*(-sif1+f(gei*(sea1+seb1)/2+gni*(sna1+snb1)/2-gii*sif1-thri))/taui
+sna1'=per*(-sna1+an*sea1*(1-sna1))/taun
+snb1'=per*(-snb1+an*seb1*(1-snb1))/taun
+
+## Stage 2
+# apply the stimulus
+sea2'=eta*per*(-sea2+f(gee*(p*sea2+(1-p)*seb2)+gne*(p*sna2+(1-p)*snb2)-gie*sif2-thre))/taue
+seb2'=eta*per*(-seb2+f(gee*(p*seb2+(1-p)*sea2)+gne*(p*snb2+(1-p)*sna2)-gie*sif2-thre))/taue
+sif2'=eta*per*(-sif2+f(gei*(sea2+seb2)/2+gni*(sna2+snb2)/2-gii*sif2-thri))/taui
+sna2'=eta*per*(-sna2+an*sea2*(1-sna2))/taun
+snb2'=eta*per*(-snb2+an*seb2*(1-snb2))/taun
+
+## Stage 3
+# wait for one more cycle to check if winner!
+sea3'=zet*per*(-sea3+f(gee*(p*sea3+(1-p)*seb3)+gne*(p*sna3+(1-p)*snb3)-gie*sif3-thre))/taue
+seb3'=zet*per*(-seb3+f(gee*(p*seb3+(1-p)*sea3)+gne*(p*snb3+(1-p)*sna3)-gie*sif3-thre))/taue
+sif3'=zet*per*(-sif3+f(gei*(sea3+seb3)/2+gni*(sna3+snb3)/2-gii*sif3-thri))/taui
+sna3'=zet*per*(-sna3+an*sea3*(1-sna3))/taun
+snb3'=zet*per*(-snb3+an*seb3*(1-snb3))/taun
+
+init per=21.32
+init amp=16.29
+
+init sea1=2.5,seb1=0,sif1=.48827,sna1=.6376,snb1=0
+init sea2=2.5,seb2=0,sif2=.48827,sna2=.6376,snb2=0
+init sea3=.6640834,seb3=16.29,sif3=1.187722,sna3=.7124087,snb3=0.000025
+
+par sec=2.5
+par eta=.5
+par zet=0.315
+
+# define ratios
+!gne=rne_e*gee
+!gni=rne_i*gei
+
+# boundary conditions
+# periodic start
+b sea1-sec
+b sea1'-sec
+b seb1-seb1'
+b sif1-sif1'
+b sna1-sna1'
+b snb1-snb1'
+
+# continuity at the stim start
+b sea2-sea1'
+b seb2-seb1'
+b sif2-sif1'
+b sna2-sna1'
+b snb2-snb1'
+
+# continuity at the stim end
+b sea3-sea2'
+b seb3-amp
+b sif3-sif2'
+b sna3-sna2'
+b snb3-snb2'
+# the hitting condition
+b sna3'-snb3'
+
+aux df=sna3-snb3
+# parameters
+par gee=20,rne_e=.75
+par gei=10,rne_i=.5
+par gie=30,gii=5
+par p=.9
+par an=1
+par thre=5,thri=5
+par taue=2,taun=80,taui=4
+par a=1,b=20,c=0
+@ dt=.0005,total=1
+@ xp=t,yp=df,xlo=0,ylo=-1,xhi=1,yhi=1,nplot=3,yp2=per,yp3=amp
+
+done
